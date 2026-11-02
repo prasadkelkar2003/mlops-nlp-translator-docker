@@ -1,0 +1,53 @@
+--------------------------------------------------------------------------------
+
+STEP 1: BUILD AND RUN DOCKER CONTAINER
+
+--------------------------------------------------------------------------------
+
+# Build the Docker image
+
+docker build -t translation-api:v1 .
+
+
+
+# Run container as a daemon mapping port 8000
+
+docker run -d --name translator -p 8000:8000 translation-api:v1
+
+
+
+# Inspect container runtime logs
+
+docker logs -f translator
+
+
+
+
+
+--------------------------------------------------------------------------------
+
+STEP 2: TEST INFERENCE
+
+--------------------------------------------------------------------------------
+
+# 2.1 Check health endpoint
+
+curl -s http://localhost:8000/health
+
+
+
+# 2.2 Test translation endpoint via POST request
+
+curl -s -X POST http://localhost:8000/translate \
+
+  -H "Content-Type: application/json" \
+
+  -d '{"text": "DevOps pipelines make machine learning models reliable."}'
+
+
+
+# 2.3 Browser Access:
+
+# - Root UI: http://localhost:8000/
+
+# - Swagger Docs: http://localhost:8000/docs
